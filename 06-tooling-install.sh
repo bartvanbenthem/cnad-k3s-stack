@@ -2,7 +2,7 @@
 
 ##############################################################
 # INSTALL ARGOCD
-###############################################
+##############################################################
 #create namespace
 kubectl create namespace argocd
 #Install as on any other cluster
@@ -15,7 +15,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 ##############################################################
 # PORTAINER
-###############################################
+##############################################################
 helm repo add portainer https://portainer.github.io/k8s/
 helm repo update
 helm install --create-namespace -n portainer portainer portainer/portainer

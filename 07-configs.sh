@@ -1,4 +1,4 @@
-
+##############################################################
 # Configure ingress resources and corresponding services
 ##############################################################
 kubectl -n monitoring apply -f ingresses/prometheus-ingress.yaml
