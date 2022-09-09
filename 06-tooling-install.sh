@@ -20,24 +20,8 @@ helm repo add portainer https://portainer.github.io/k8s/
 helm repo update
 helm install --create-namespace -n portainer portainer portainer/portainer
 
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: Service
-metadata:
-  name: portainer
-  namespace: portainer
-spec:
-  selector:
-    app.kubernetes.io/name: portainer
-    app.kubernetes.io/instance: portainer
-  type: LoadBalancer
-  loadBalancerIP: 192.168.2.37
-  ports:
-    - name: http
-      protocol: TCP
-      port: 9000
-      targetPort: 9000
-EOF
+# expose UI 
+kubectl -n portainer apply -f portainer/portainer-lb.yaml
 
 # check 
 kubectl -n portainer get svc portainer 

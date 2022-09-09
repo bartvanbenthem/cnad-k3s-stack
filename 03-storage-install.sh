@@ -22,24 +22,9 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --create-nam
 # if you do not want to create separate service file for UI access as I did leter on with `service.yaml` you can use it like this:
 # helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --set defaultSettings.defaultDataPath="/storage01" --set service.ui.loadBalancerIP="192.168.0.201" --set service.ui.type="LoadBalancer"
 
-#UI
+#Expose UI over MetalLB
+kubectl -n longhorn-system apply -f longhorn/longhorn-lb.yaml
 
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: Service
-metadata:
-  name: longhorn-ingress-lb
-  namespace: longhorn-system
-spec:
-  selector:
-    app: longhorn-ui
-  type: LoadBalancer
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: http
-EOF
 
 # check the assigned loadbalancer IP to access the UI
 kubectl -n longhorn-system get svc longhorn-ingress-lb

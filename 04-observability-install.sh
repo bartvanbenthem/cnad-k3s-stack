@@ -1,11 +1,11 @@
 #!/bin/sh
 
 ##############################################################
-# METRICS Prometheus
+# METRICS PROMETHEUS
 ##############################################################
-wget https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml -O prometheus/bundle.yaml
-sed -i 's/namespace: default/namespace: monitoring/g' prometheus/bundle.yaml
-grep 'namespace: ' prometheus/bundle.yaml
+#wget https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml -O prometheus/bundle.yaml
+#sed -i 's/namespace: default/namespace: monitoring/g' prometheus/bundle.yaml
+#grep 'namespace: ' prometheus/bundle.yaml
 
 kubectl create namespace monitoring
 kubectl apply --server-side -f prometheus/bundle.yaml
@@ -33,6 +33,7 @@ kubectl -n monitoring get svc prometheus-external
 ##############################################################
 kubectl apply -f grafana/grafana.yaml
 
+kubectl -n monitoring get pods
 # Get External Loadbalancer IP
 kubectl -n monitoring get svc grafana
 # NAME                  TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)             AGE
