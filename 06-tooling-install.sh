@@ -1,5 +1,6 @@
 #!/bin/bash
 
+##############################################################
 # INSTALL ARGOCD
 ###############################################
 #create namespace
@@ -12,6 +13,7 @@ kubectl -n argocd patch service argocd-server --patch '{ "spec": { "type": "Load
 # Username: admin and password is randomly generated. Get it like this:
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
+##############################################################
 # PORTAINER
 ###############################################
 helm repo add portainer https://portainer.github.io/k8s/

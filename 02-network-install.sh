@@ -1,6 +1,8 @@
 #!/bin/bash
 
+##############################################################
 # INSTALL METALLB
+##############################################################
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.3/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.3/manifests/metallb.yaml
 
@@ -19,7 +21,9 @@ data:
       - 192.168.2.1-192.168.2.254
 EOF
 
+##############################################################
 # INSTALL NGINX INGRESS
+##############################################################
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm show values ingress-nginx/ingress-nginx

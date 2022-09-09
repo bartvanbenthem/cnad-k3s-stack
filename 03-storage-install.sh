@@ -1,9 +1,12 @@
 #!/bin/sh
 
+##############################################################
+# INSTALL LONGHORN
+##############################################################
+
 # install on all nodes
 sudo apt update \
 sudo apt install -y nfs-common open-iscsi util-linux jq
-
 # check disks
 lsblk -f
 
