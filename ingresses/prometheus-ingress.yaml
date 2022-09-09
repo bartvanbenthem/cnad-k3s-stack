@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-svc-ingress
+  namespace: monitoring
+spec:
+  selector:
+    prometheus: prometheus-persistant
+  ports:
+    - name: web
+      protocol: TCP
+      port: 9090
+      targetPort: web
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  spec:
+  ingressClassName: nginx
+  rules:
+  - host: prometheus  
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: prometheus-svc-ingress
+              port: 
+                number: 9090

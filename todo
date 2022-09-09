@@ -1,0 +1,3 @@
+- fix 404 nginx ingress timeouts after certain ammount of timeouts
+- fix node-exporter service monitor
+- create argocd ingress resources
