@@ -23,6 +23,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
   --namespace ingress-nginx --create-namespace \
   --values nginx-ingress/values.yaml \
+  --set controller.service.loadBalancerIP='192.168.2.30' \
   --set controller.metrics.enabled=true \
   --set controller.metrics.serviceMonitor.additionalLabels.release="prometheus"
   #--set controller.metrics.serviceMonitor.enabled=true

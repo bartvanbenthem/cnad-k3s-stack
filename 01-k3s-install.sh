@@ -6,8 +6,10 @@
 TOKEN='123234454985944449564965869486954645959'
 MSIP='192.168.2.177'
 curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" \
-INSTALL_K3S_EXEC="--cluster-cidr=10.0.0.0/16 --token=$TOKEN --disable=traefik --disable servicelb --disable local-storage --node-taint CriticalAddonsOnly=true:NoExecute" \
+INSTALL_K3S_EXEC="--cluster-cidr=10.0.0.0/16 --token=$TOKEN --disable=traefik --disable servicelb --disable local-storage" \
 sh -
+# in production add:
+# --node-taint CriticalAddonsOnly=true:NoExecute
 
 # copy rancher config to default kubeconfig
 mkdir ~/.kube
@@ -22,4 +24,3 @@ cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config
 TOKEN='123234454985944449564965869486954645959'
 MSIP='192.168.2.177'
 curl -sfL https://get.k3s.io | K3S_URL=https://$MSIP:6443 K3S_TOKEN=$TOKEN sh -
-

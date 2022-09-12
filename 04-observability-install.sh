@@ -37,13 +37,14 @@ kubectl -n monitoring get pods
 # Get External Loadbalancer IP
 kubectl -n monitoring get svc grafana
 # NAME                  TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)             AGE
-# grafana               LoadBalancer   10.43.0.220    192.168.2.139   3000:30917/TCP      44s
+# grafana               LoadBalancer   10.43.0.220    192.168.2.39   3000:30917/TCP      44s
 
 # Default login and password is admin:admin
 
 # Add the Datasources and dashboards
 Prometheus datasource:      http://prometheus.monitoring.svc.cluster.local:9090
-Kubernetes dashboard:       8171, 7249 
+Kubernetes nodes:           8171 
+Kubernetes metrics:         7249 
 longhorn dashboard:         13032 
 nginx ingress dashboard:    9614    
 
