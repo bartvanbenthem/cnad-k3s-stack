@@ -9,4 +9,4 @@ sudo /usr/local/bin/k3s-agent-uninstall.sh
 sudo /usr/local/bin/k3s-uninstall.sh
 
 # storage cleanup on all longhorn nodes
-sudo rm -rf /storage/*
+sudo rm -rf longhorn/storage/*

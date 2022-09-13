@@ -12,7 +12,8 @@ sudo apt install -y nfs-common open-iscsi util-linux jq
 # check disks
 lsblk -f
 # Next, we need to make your hard-drive shareable for Longhorn.
-sudo mount --make-rshared /
+# sudo mount --make-rshared /
+sudo mount --make-rshared /longhorn
 
 # ON THE K8S API RUN
 ##############################################################
@@ -22,7 +23,7 @@ curl -sSfL https://raw.githubusercontent.com/longhorn/longhorn/v1.0.0/scripts/en
 
 helm repo add longhorn https://charts.longhorn.io
 helm repo update
-helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --set defaultSettings.defaultDataPath="/storage01"
+helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --set defaultSettings.defaultDataPath="/longhorn/storage01"
 # if you do not want to create separate service file for UI access as I did later on with `service.yaml` you can use it like this:
 # helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --set defaultSettings.defaultDataPath="/storage01" --set service.ui.loadBalancerIP="192.168.0.201" --set service.ui.type="LoadBalancer"
 
