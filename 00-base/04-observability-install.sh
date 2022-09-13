@@ -15,6 +15,7 @@ kubectl apply -f 00-base/service-monitors/node-exporter-sm.yaml
 kubectl apply -f 00-base/service-monitors/kube-state-metrics-sm.yaml
 kubectl apply -f 00-base/service-monitors/kubelet-sm.yaml
 kubectl apply -f 00-base/service-monitors/longhorn-sm.yaml
+kubectl apply -f 00-base/service-monitors/nginx-ingress-sm.yaml
 
 # check exporters
 kubectl -n monitoring get pods
