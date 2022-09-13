@@ -1,19 +1,10 @@
-#!/bin/bash
-
-##############################################################
-# INSTALL METALLB
-##############################################################
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.3/manifests/namespace.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.3/manifests/metallb.yaml
-
-kubectl -n metallb-system apply -f metallb/pool.yaml
-
 ##############################################################
 # INSTALL NGINX INGRESS
 ##############################################################
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm show values ingress-nginx/ingress-nginx
+
 # check these values and change when needed
 # Set hostNetwork to true
 # Set hostPort:enabled to true
@@ -29,5 +20,18 @@ helm upgrade --install ingress-nginx ingress-nginx \
   #--set controller.metrics.serviceMonitor.enabled=true
 
 helm get values ingress-nginx --namespace ingress-nginx
+
+# add nginx service-monitor for prometheus integration
+kubectl apply -f service-monitors/nginx-ingress-sm.yaml
+
+##############################################################
+# Configure ingress resources and corresponding services
+##############################################################
+kubectl -n monitoring apply -f ingresses/prometheus-ingress.yaml
+kubectl -n monitoring apply -f ingresses/grafana-ingress.yaml
+kubectl -n longhorn-system apply -f ingresses/longhorn-ingress.yaml
+kubectl -n argocd apply -f ingresses/argocd-ingress.yaml
+kubectl -n portainer apply -f ingresses/portainer-ingress.yaml
+
 # helm -n ingress-nginx uninstall ingress-nginx
 # kubectl delete ns ingress-nginx

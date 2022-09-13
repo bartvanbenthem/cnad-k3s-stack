@@ -15,7 +15,6 @@ kubectl apply -f service-monitors/longhorn-sm.yaml
 kubectl apply -f service-monitors/node-exporter-sm.yaml
 kubectl apply -f service-monitors/kube-state-metrics-sm.yaml
 kubectl apply -f service-monitors/kubelet-sm.yaml
-kubectl apply -f service-monitors/nginx-ingress-sm.yaml
 
 # check exporters
 kubectl -n monitoring get pods
@@ -47,9 +46,4 @@ Kubernetes nodes:           8171
 Kubernetes metrics:         7249 
 longhorn dashboard:         13032 
 nginx ingress dashboard:    9614    
-
-##############################################################
-# LOGS GRAFANA LOKI
-##############################################################
-kubectl create namespace logging
 
