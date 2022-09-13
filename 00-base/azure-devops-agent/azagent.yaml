@@ -1,19 +1,4 @@
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: azagent-pv-volume
-  labels:
-    type: azagent
-spec:
-  storageClassName: longhorn
-  capacity:
-    storage: 2Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/var/run/docker.sock"
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: azagent-pv-claim
@@ -23,7 +8,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 3Gi
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: ServiceAccount
