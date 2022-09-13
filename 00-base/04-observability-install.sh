@@ -45,6 +45,6 @@ kubectl -n monitoring get svc grafana
 Prometheus datasource:      http://prometheus.monitoring.svc.cluster.local:9090
 Kubernetes nodes:           8171 
 Kubernetes metrics:         7249 
-#longhorn dashboard:         13032 
-#nginx ingress dashboard:    9614    
+nginx ingress dashboard:    9614 
+longhorn dashboard:         13032   
 
