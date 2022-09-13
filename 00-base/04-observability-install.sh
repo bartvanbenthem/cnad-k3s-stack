@@ -8,19 +8,19 @@
 #grep 'namespace: ' prometheus/bundle.yaml
 
 kubectl create namespace monitoring
-kubectl apply --server-side -f prometheus/bundle.yaml
+kubectl apply --server-side -f 00-base/prometheus/bundle.yaml
 
 # INSTALL SERVICE MONITORS
-kubectl apply -f service-monitors/longhorn-sm.yaml
-kubectl apply -f service-monitors/node-exporter-sm.yaml
-kubectl apply -f service-monitors/kube-state-metrics-sm.yaml
-kubectl apply -f service-monitors/kubelet-sm.yaml
+kubectl apply -f 00-base/service-monitors/node-exporter-sm.yaml
+kubectl apply -f 00-base/service-monitors/kube-state-metrics-sm.yaml
+kubectl apply -f 00-base/service-monitors/kubelet-sm.yaml
+kubectl apply -f 00-base/service-monitors/longhorn-sm.yaml
 
 # check exporters
 kubectl -n monitoring get pods
 
 # Install Prometheus
-kubectl apply -f prometheus/prometheus.yaml
+kubectl apply -f 00-base/prometheus/prometheus.yaml
 
 # Get External Loadbalancer IP
 kubectl -n monitoring get svc prometheus-external
@@ -28,9 +28,9 @@ kubectl -n monitoring get svc prometheus-external
 # prometheus-external   LoadBalancer   10.43.136.83   192.168.2.38    9090:30763/TCP      149m
 
 ##############################################################
-# GRAFANA
+# LOCAL GRAFANA INSTANCE
 ##############################################################
-kubectl apply -f grafana/grafana.yaml
+kubectl apply -f 00-base/grafana/grafana.yaml
 
 kubectl -n monitoring get pods
 # Get External Loadbalancer IP
@@ -44,6 +44,6 @@ kubectl -n monitoring get svc grafana
 Prometheus datasource:      http://prometheus.monitoring.svc.cluster.local:9090
 Kubernetes nodes:           8171 
 Kubernetes metrics:         7249 
-longhorn dashboard:         13032 
-nginx ingress dashboard:    9614    
+#longhorn dashboard:         13032 
+#nginx ingress dashboard:    9614    
 

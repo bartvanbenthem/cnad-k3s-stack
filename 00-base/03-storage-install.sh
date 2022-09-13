@@ -1,17 +1,21 @@
 #!/bin/sh
 
 ##############################################################
-# INSTALL LONGHORN
+# INSTALL LONGHORN DISTRIBUTED STORAGE
 ##############################################################
 
-# install on all nodes
+# ON THE NODES RUN
+##############################################################
+# install packages
 sudo apt update
 sudo apt install -y nfs-common open-iscsi util-linux jq
 # check disks
 lsblk -f
-
 # Next, we need to make your hard-drive shareable for Longhorn.
 sudo mount --make-rshared /
+
+# ON THE K8S API RUN
+##############################################################
 
 # You must run this command from a computer with kubectl access to your cluster.
 curl -sSfL https://raw.githubusercontent.com/longhorn/longhorn/v1.0.0/scripts/environment_check.sh | bash
@@ -23,8 +27,7 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --create-nam
 # helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --set defaultSettings.defaultDataPath="/storage01" --set service.ui.loadBalancerIP="192.168.0.201" --set service.ui.type="LoadBalancer"
 
 #Expose UI over MetalLB
-kubectl -n longhorn-system apply -f longhorn/longhorn-lb.yaml
-
+kubectl -n longhorn-system apply -f 00-base/longhorn/longhorn-lb.yaml
 
 # check the assigned loadbalancer IP to access the UI
 kubectl -n longhorn-system get svc longhorn-ingress-lb

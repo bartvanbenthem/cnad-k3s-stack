@@ -13,7 +13,7 @@ kubectl -n azagent create secret generic azdevops \
                   --from-literal=AZP_TOKEN=$PAT \
                   --from-literal=AZP_POOL=$POOL 
 
-kubectl -n azagent apply -f azure-devops-agent/azagent.yaml
+kubectl -n azagent apply -f 00-base/azure-devops-agent/azagent.yaml
 
 # remove agent
 # kubectl -n azagent delete secret azdevops
