@@ -1,2 +1,2 @@
-# cnad-platform
-Cloud Native Application Delivery Platform
+# cnad-k3s-stack
+Cloud Native Application Delivery - K3s Stack
