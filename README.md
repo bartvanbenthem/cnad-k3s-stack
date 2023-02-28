@@ -33,9 +33,9 @@ echo "curl -sfL https://get.k3s.io | K3S_URL=https://$MSIP:6443 K3S_TOKEN=$TOKEN
 ##############################################################
 # INSTALL METALLB
 ##############################################################
-kubectl apply -f 00-base/metallb/namespace.yaml
-kubectl -n metallb-system apply -f 00-base/metallb/metallb.yaml
-kubectl -n metallb-system apply -f 00-base/metallb/pool.yaml
+kubectl apply -f config/metallb/namespace.yaml
+kubectl -n metallb-system apply -f config/metallb/metallb.yaml
+kubectl -n metallb-system apply -f config/metallb/pool.yaml
 ```
 
 
@@ -68,7 +68,7 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --create-nam
 # helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --set defaultSettings.defaultDataPath="/storage01" --set service.ui.loadBalancerIP="192.168.0.201" --set service.ui.type="LoadBalancer"
 
 #Expose UI over MetalLB
-kubectl -n longhorn-system apply -f 00-base/longhorn/longhorn-lb.yaml
+kubectl -n longhorn-system apply -f config/longhorn/longhorn-lb.yaml
 
 # check the assigned loadbalancer IP to access the UI
 kubectl -n longhorn-system get svc longhorn-ingress-lb
@@ -90,20 +90,20 @@ kubectl get storageclass
 #grep 'namespace: ' prometheus/bundle.yaml
 
 kubectl create namespace monitoring
-kubectl apply --server-side -f 00-base/prometheus/bundle.yaml
+kubectl apply --server-side -f config/prometheus/bundle.yaml
 
 # INSTALL SERVICE MONITORS
-kubectl apply -f 00-base/service-monitors/node-exporter-sm.yaml
-kubectl apply -f 00-base/service-monitors/kube-state-metrics-sm.yaml
-kubectl apply -f 00-base/service-monitors/kubelet-sm.yaml
-kubectl apply -f 00-base/service-monitors/longhorn-sm.yaml
-kubectl apply -f 00-base/service-monitors/nginx-ingress-sm.yaml
+kubectl apply -f config/service-monitors/node-exporter-sm.yaml
+kubectl apply -f config/service-monitors/kube-state-metrics-sm.yaml
+kubectl apply -f config/service-monitors/kubelet-sm.yaml
+kubectl apply -f config/service-monitors/longhorn-sm.yaml
+kubectl apply -f config/service-monitors/nginx-ingress-sm.yaml
 
 # check exporters
 kubectl -n monitoring get pods
 
 # Install Prometheus
-kubectl apply -f 00-base/prometheus/prometheus.yaml
+kubectl apply -f config/prometheus/prometheus.yaml
 
 # Get External Loadbalancer IP
 kubectl -n monitoring get svc prometheus-external
@@ -113,7 +113,7 @@ kubectl -n monitoring get svc prometheus-external
 ##############################################################
 # LOCAL GRAFANA INSTANCE
 ##############################################################
-kubectl apply -f 00-base/grafana/grafana.yaml
+kubectl apply -f config/grafana/grafana.yaml
 
 kubectl -n monitoring get pods
 # Get External Loadbalancer IP
@@ -148,7 +148,7 @@ helm show values ingress-nginx/ingress-nginx
 helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
   --namespace ingress-nginx --create-namespace \
-  --values 00-base/nginx-ingress/values.yaml \
+  --values config/nginx-ingress/values.yaml \
   --set controller.service.loadBalancerIP='192.168.2.30' \
   --set controller.metrics.enabled=true \
   --set controller.metrics.serviceMonitor.additionalLabels.release="prometheus"
