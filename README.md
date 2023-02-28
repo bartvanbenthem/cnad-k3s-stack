@@ -1,6 +1,4 @@
-# k3s example-stack
-K3s example-stack
-
+# k3s stack
 
 ```bash
 ##############################################################
