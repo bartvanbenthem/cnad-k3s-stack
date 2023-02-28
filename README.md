@@ -7,7 +7,7 @@
 
 # install k3s master node
 TOKEN='123234454985944449564965869486954645959'
-MSIP='192.168.2.177'
+MSIP='192.168.2.166' # set to host IP: hostname -I
 curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" \
 INSTALL_K3S_EXEC="--cluster-cidr=10.0.0.0/16 --token=$TOKEN --disable=traefik --disable servicelb --disable local-storage" \
 sh -
@@ -24,9 +24,9 @@ cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config
 #    K3S_TOKEN which is stored in /var/lib/rancher/k3s/server/node-token
 # curl -sfL https://get.k3s.io | K3S_URL=https://serverip:6443 K3S_TOKEN=mytoken sh -
 
-TOKEN='123234454985944449564965869486954645959'
-MSIP='192.168.2.177'
-curl -sfL https://get.k3s.io | K3S_URL=https://$MSIP:6443 K3S_TOKEN=$TOKEN sh -
+# print line to add additional nodes to cluster
+echo "curl -sfL https://get.k3s.io | K3S_URL=https://$MSIP:6443 K3S_TOKEN=$TOKEN sh -"
+
 ```
 
 ```bash
@@ -124,11 +124,11 @@ kubectl -n monitoring get svc grafana
 # Default login and password is admin:admin
 
 # Add the Datasources and dashboards
-Prometheus datasource:      http://prometheus.monitoring.svc.cluster.local:9090
-Kubernetes nodes:           8171 
-Kubernetes metrics:         7249 
-nginx ingress dashboard:    9614 
-longhorn dashboard:         13032   
+# Prometheus datasource:      http://prometheus.monitoring.svc.cluster.local:9090
+# Kubernetes nodes:           8171 
+# Kubernetes metrics:         7249 
+# nginx ingress dashboard:    9614 
+# longhorn dashboard:         13032   
 
 ```
 
@@ -155,13 +155,6 @@ helm upgrade --install ingress-nginx ingress-nginx \
   #--set controller.metrics.serviceMonitor.enabled=true
 
 helm get values ingress-nginx --namespace ingress-nginx
-
-##############################################################
-# Configure ingress resources and corresponding services
-##############################################################
-kubectl -n monitoring apply -f 00-base/ingresses/prometheus-ingress.yaml
-kubectl -n monitoring apply -f 00-base/ingresses/grafana-ingress.yaml
-kubectl -n longhorn-system apply -f 00-base/ingresses/longhorn-ingress.yaml
 
 # helm -n ingress-nginx uninstall ingress-nginx
 # kubectl delete ns ingress-nginx

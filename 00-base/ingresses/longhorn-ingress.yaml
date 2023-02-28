@@ -17,17 +17,17 @@ kind: Ingress
 metadata:
   name: longhorn
   namespace: longhorn-system
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
-  spec:
-  ingressClassName: nginx
   rules:
-  - host: longhorn  
+  - host: longhorn
     http:
       paths:
-        - pathType: Prefix
-          path: "/"
-          backend:
-            service:
-              name: longhorn-svc-ingress
-              port: 
-                number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: longhorn-svc-ingress
+            port:
+              number: 80

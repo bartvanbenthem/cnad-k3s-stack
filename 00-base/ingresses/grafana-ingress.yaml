@@ -17,17 +17,17 @@ kind: Ingress
 metadata:
   name: grafana
   namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
-  spec:
-  ingressClassName: nginx
   rules:
-  - host: grafana  
+  - host: grafana
     http:
       paths:
-        - pathType: Prefix
-          path: "/"
-          backend:
-            service:
-              name: grafana-svc-ingress
-              port: 
-                number: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana-svc-ingress
+            port:
+              number: 3000
